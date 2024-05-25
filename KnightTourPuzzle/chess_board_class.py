@@ -2,10 +2,14 @@ import numpy as np
 
 
 class ChessBoardPlay:
-    def __init__(self, n, possible_steps_lst):
+    def __init__(self, n, possible_steps_lst, sample_first_pos=True, first_pos=None):
         self.cb_dim = n
         self.cb_board = np.zeros((n, n))
-        self.curr_loc_x, self.curr_loc_y = self.sample_start_point()
+        if sample_first_pos:
+            self.curr_loc_x, self.curr_loc_y = self.sample_start_point()
+        else:
+            self.curr_loc_x, self.curr_loc_y = first_pos
+        self.sign_visited_place((self.curr_loc_x, self.curr_loc_y))
         self.cb_steps = possible_steps_lst
         self.cb_board_route = np.zeros((n, n))
 
@@ -14,7 +18,6 @@ class ChessBoardPlay:
 
     def sample_start_point(self):
         i_start, j_start = np.random.randint(self.cb_dim, size=2)
-        self.sign_visited_place((i_start, j_start))
         return i_start, j_start
 
     def is_in_board(self, x_loc, y_loc):
