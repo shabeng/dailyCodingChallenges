@@ -1,4 +1,5 @@
 from collections import defaultdict
+import numpy as np
 
 
 class Graph:
@@ -36,16 +37,21 @@ class Graph:
         return w
 
 
+def create_random_graph(node_num, edge_num, is_directed=False):
+    # Sample edges and save unique only
+    edges_sample_with_rep = np.random.randint(node_num, size=(edge_num, 2))
+    edges_sample_no_rep = np.unique(edges_sample_with_rep, axis=0)
+    # Sample weights
+    weight_sample = np.random.randint(25, size=(edges_sample_no_rep.shape[0]))
+    # Zip between the weights and edges
+    edges = list(zip(edges_sample_no_rep, weight_sample))
+    g = Graph(edges, is_directed=is_directed)
+    return g
+
+
 if __name__ == '__main__':
-    import numpy as np
     nodes_num = 5
     edges_num = 10
-    edges_sample = [(np.random.randint(nodes_num, size=2), np.random.randint(25)) for i in range(edges_num)]
-    edges = [(edge, w) for edge, w in edges_sample if edge[0] != edge[1]]
-    graph = Graph(edges, is_directed=False)
-    for elem in edges:
-        print(elem)
-    for elem in graph.graph.keys():
-        print(f'{elem}: {graph.graph[elem]}')
+    graph = create_random_graph(nodes_num, edges_num)
 
 
