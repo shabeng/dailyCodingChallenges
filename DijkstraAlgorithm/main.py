@@ -5,7 +5,7 @@ from collections import defaultdict
 from DijkstraAlgorithm.graph import create_random_graph
 from DijkstraAlgorithm.dijkstra_algorithm import dijkstra_dict, dijkstra_heap, create_path
 
-runs_num = 100
+runs_num = 1000
 nodes_num = 1000
 edges_num = 100000
 runtimes = defaultdict(list)
