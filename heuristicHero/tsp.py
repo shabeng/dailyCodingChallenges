@@ -57,13 +57,28 @@ class TSP:
         dist += self.tsp_tij[route[-1], route[0]]
         return dist
 
-    # def k_opt(self):
-    #     curr_val =
+    def k_opt(self):
+        curr_route = self.tsp_best_route.copy()
+        for i in range(1, len(self.tsp_best_route) - 2):
+            for j in range(i + 2, len(self.tsp_best_route) - 1):
+                swapped_route = curr_route[0:i] + curr_route[j:i - 1:-1] + curr_route[j + 1:]
+                # Calc the difference in the route distance:
+                n_im1, n_i, n_j, n_jp1 = curr_route[i - 1], curr_route[i], curr_route[j], curr_route[j + 1]
+                b4_swap = self.get_tij()[n_im1, n_i] + self.get_tij()[n_j, n_jp1]
+                aftr_swap = self.get_tij()[n_im1, n_j] + self.get_tij()[n_i, n_jp1]
+                swapped_diff = aftr_swap - b4_swap
+                if swapped_diff < 0:
+                    print(curr_route)
+                    curr_route = swapped_route
+                    self.tsp_best_route = swapped_route.copy()
+                    self.tsp_best_route_len = self.calc_distance_of_route(self.tsp_best_route)
+        return self.tsp_best_route, self.tsp_best_route_len
 
 
 if __name__ == '__main__':
-    prob = TSP(4)
-    print(prob.get_tij())
+    prob = TSP(50)
+    # print(prob.get_tij())
     prob.construct_greedy_route()
-    print(prob.tsp_solutions_cache)
+    print(prob.tsp_best_route_len)
+    print(prob.k_opt())
 
