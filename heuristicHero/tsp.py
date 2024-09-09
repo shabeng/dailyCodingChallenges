@@ -68,7 +68,6 @@ class TSP:
                 aftr_swap = self.get_tij()[n_im1, n_j] + self.get_tij()[n_i, n_jp1]
                 swapped_diff = aftr_swap - b4_swap
                 if swapped_diff < 0:
-                    print(curr_route)
                     curr_route = swapped_route
                     self.tsp_best_route = swapped_route.copy()
                     self.tsp_best_route_len = self.calc_distance_of_route(self.tsp_best_route)
@@ -76,7 +75,7 @@ class TSP:
 
 
 if __name__ == '__main__':
-    prob = TSP(50)
+    prob = TSP(10)
     # print(prob.get_tij())
     prob.construct_greedy_route()
     print(prob.tsp_best_route_len)
